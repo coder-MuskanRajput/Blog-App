@@ -3,12 +3,22 @@ import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import { Button, TextField } from '@mui/material';
 
+const signupInitialValue = {
+  username : "",
+  email : "",
+  password : ""
+}
+
 const Login = () => {
 
   const [account, setAccount] = useState("login");
+  const [signup, setSignup] = useState(signupInitialValue)
 
-  const setSingup = () =>{
+  const togglesignup = () =>{
      account ==="signup" ? setAccount("login") :setAccount("signup")
+  }
+  const onInputChange=(e)=>{
+       setSignup({...singup, [e.target.name]: e.target.value})
   }
   return (
     <>
@@ -51,7 +61,7 @@ const Login = () => {
 
     <hr className="my-6 border-gray-300 w-full"/>
 
-    <p className="mt-8">Need an account? <button onClick={() => setSingup()} className="text-blue-500 hover:text-blue-700 font-semibold">Create an
+    <p className="mt-8">Need an account? <button onClick={() => togglesignup()} className="text-blue-500 hover:text-blue-700 font-semibold">Create an
             account </button></p>
 
   </div>
@@ -71,24 +81,23 @@ const Login = () => {
 
   <div className="w-full h-100">
     <img src="https://cdn.logojoy.com/wp-content/uploads/2018/05/30164225/572.png" className='h-20 w-80 m-auto object-cover' alt="" />
-    {/* <h1 className="text-xl font-bold">BLogging App</h1> */}
 
     <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Sign up to make account</h1>
 
     <form className="mt-6" action="#" method="POST">
 
     <div>
-        <label className="block text-gray-700">Email Username</label>
-        <input type="text" name="" id="" placeholder="Enter Username" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
+        <label  className="block text-gray-700"> Username</label>
+        <input onClick={(e)=>onInputChange(e)} type="text" name="username" id="" placeholder="Enter Username" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
       </div>
-      <div>
+      <div className="mt-4">
         <label className="block text-gray-700">Email Address</label>
-        <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
+        <input onClick={(e)=>onInputChange(e)} type="email" name="email" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
       </div>
 
       <div className="mt-4">
         <label className="block text-gray-700">Password</label>
-        <input type="password" name="" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+        <input onClick={(e)=>onInputChange(e)} type="password" name="password" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
               focus:bg-white focus:outline-none" required/>
       </div>
 
@@ -99,7 +108,7 @@ const Login = () => {
 
     <hr className="my-6 border-gray-300 w-full"/>
 
-    <p   className="mt-8">Already have an account? <button onClick={() => setSingup()} className="text-blue-500 hover:text-blue-700 font-semibold">Log In </button></p>
+    <p   className="mt-8">Already have an account? <button onClick={() => togglesignup()} className="text-blue-500 hover:text-blue-700 font-semibold">Log In </button></p>
 
   </div>
 </div>
