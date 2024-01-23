@@ -1,24 +1,61 @@
 import React, { useState } from 'react'
+import {API} from  "../../Service/api"
+import axios from 'axios'
+// import Box from '@mui/material/Box';
+// import { Button, TextField } from '@mui/material';
 
-import Box from '@mui/material/Box';
-import { Button, TextField } from '@mui/material';
-
-const signupInitialValue = {
-  username : "",
-  email : "",
-  password : ""
-}
 
 const Login = () => {
 
+  const signupInitialValue = {
+    username : "",
+    email : "",
+    password : ""
+  }
+  
+  const submitHandler = async (e)=>{
+  e.preventDefault();
+  }
+
+  const subbmit = async ()=>{
+    try {
+      const dataZ = await axios({
+        method: "post",
+        url : "http://localhost:8080/signup",
+        headers: {
+           'content-type': 'application/x-www-form-urlencoded'
+           },
+        data : signup
+    })
+    console.log(dataZ);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   const [account, setAccount] = useState("login");
   const [signup, setSignup] = useState(signupInitialValue)
+  const [error, setError] = useState("")
 
   const togglesignup = () =>{
      account ==="signup" ? setAccount("login") :setAccount("signup")
   }
   const onInputChange=(e)=>{
-       setSignup({...singup, [e.target.name]: e.target.value})
+      // console.log(e.target.value);
+       setSignup({...signup, [e.target.name]: e.target.value})
+      //  console.log(signup);
+  }
+
+  const signupUser = async() =>{
+    let response =  await API.userSignup(signup);
+    if(response.isSuccess){
+      setError("");
+      setSignup(signupInitialValue);
+      togglesignup("login")
+    }
+    else{
+       setError("Something went wrong Please try Again later")
+    }
   }
   return (
     <>
@@ -39,7 +76,7 @@ const Login = () => {
 
     <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-    <form className="mt-6" action="#" method="POST">
+    <form onSubmit={submitHandler} className="mt-6">
       <div>
         <label className="block text-gray-700">Email Address</label>
         <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
@@ -55,7 +92,7 @@ const Login = () => {
         <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
       </div>
 
-      <button type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
+      <button  type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
             px-4 py-3 mt-6">Log In</button>
     </form>
 
@@ -84,25 +121,25 @@ const Login = () => {
 
     <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Sign up to make account</h1>
 
-    <form className="mt-6" action="#" method="POST">
+    <form onSubmit={submitHandler} className="mt-6">
 
     <div>
         <label  className="block text-gray-700"> Username</label>
-        <input onClick={(e)=>onInputChange(e)} type="text" name="username" id="" placeholder="Enter Username" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
+        <input onChange={onInputChange} value={signup.username} type="text" name="username" id="" placeholder="Enter Username" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
       </div>
       <div className="mt-4">
         <label className="block text-gray-700">Email Address</label>
-        <input onClick={(e)=>onInputChange(e)} type="email" name="email" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
+        <input onChange={onInputChange} value={signup.email} type="email" name="email" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
       </div>
 
       <div className="mt-4">
         <label className="block text-gray-700">Password</label>
-        <input onClick={(e)=>onInputChange(e)} type="password" name="password" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+        <input onChange={onInputChange} value={signup.password} type="password" name="password" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
               focus:bg-white focus:outline-none" required/>
       </div>
 
       
-      <button  type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
+      <button type="submit" onClick={subbmit} className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
             px-4 py-3 mt-6">Sign up</button>
     </form>
 
