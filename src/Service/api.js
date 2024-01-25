@@ -20,10 +20,10 @@ axiosInstance.interceptors.request.use(
 )
 
 axiosInstance.interceptors.response.use(
-    function(res){
+    function(response){
        // Stop global Loader here
       
-       return processResponse(res);
+       return processResponse(response);
     },
     function(error){
      return Promise.reject( processError(error));
@@ -33,19 +33,19 @@ axiosInstance.interceptors.response.use(
 ///========================================/////////
 //  if success -> return { isSuccess : true , data ; Object}
 //  if failure -> return { isFailure : true , status : string , msg : string , code : int }
-const processResponse = (res)=>{
-     if (res?.status === 200){
+const processResponse = (response)=>{
+     if (response?.status === 200){
         return {
             isSuccess : true,
-            data : res.data
+            data : response.data
         }
      }
      else{
         return {
             isFailure : true,
-            status : res?.status,
-            msg: res?.msg,
-            code: res?.code
+            status : response?.status,
+            msg: response?.msg,
+            code: response?.code
         }
      }
 }
@@ -54,8 +54,8 @@ const processResponse = (res)=>{
 //  if success -> return { isSuccess : true , data ; Object}
 //  if failure -> return { isFailure : true , status : string , msg : string , code : int }
 
-const processError = (error) =>{
-    if(error.res){
+const processError = async (error) =>{
+    if(error.response){
     // Request made and server responded with a status other
     //that falls out of tha range 2.x.x
     console.log("Error in Response" , error.toJSON())
@@ -63,9 +63,9 @@ const processError = (error) =>{
      return {
         isError : true,
         msg : API_NOTIFICATIONS_MESSAGES.responseFailure,
-        code : error.res.status
+        code : error.response.status
      }
-    }else if (error.req){
+    }else if (error.request){
      //Request made but no response was received
 
      console.log("Error in Request" , error.toJSON())
@@ -97,7 +97,7 @@ for (const [key , value] of Object.entries(SERVICE_URLS)){
         showUploadProgress,
         showDownloadProgress
     ) =>{
-        axiosInstance({
+       return axiosInstance({
             method: value.method,
             url:value.url,
             data: body,

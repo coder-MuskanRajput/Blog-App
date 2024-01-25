@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
 import {API} from  "../../Service/api"
 import axios from 'axios'
+import { Typography } from '@mui/material'
 // import Box from '@mui/material/Box';
 // import { Button, TextField } from '@mui/material';
+import styled from '@emotion/styled';
 
+const Error = styled(Typography)`
+  font-size : 10px;
+  color : #ff6161;
+  line-height : 0;
+  margin-top : 10px;
+  font-weight : 600;
+`
 
 const Login = () => {
 
@@ -13,29 +22,35 @@ const Login = () => {
     password : ""
   }
   
+  const loginInitialValue = {
+     email: "",
+     password : ""
+  }
+
   const submitHandler = async (e)=>{
   e.preventDefault();
   }
 
-  const subbmit = async ()=>{
-    try {
-      const dataZ = await axios({
-        method: "post",
-        url : "http://localhost:8080/signup",
-        headers: {
-           'content-type': 'application/x-www-form-urlencoded'
-           },
-        data : signup
-    })
-    console.log(dataZ);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const subbmit = async ()=>{
+  //   try {
+  //     const dataZ = await axios({
+  //       method: "post",
+  //       url : "http://localhost:8080/signup",
+  //       headers: {
+  //          'content-type': 'application/x-www-form-urlencoded'
+  //          },
+  //       data : signup
+  //   })
+  //   console.log(dataZ);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   
   const [account, setAccount] = useState("login");
   const [signup, setSignup] = useState(signupInitialValue)
-  const [error, setError] = useState("")
+  const [login, setLogin] = useState(loginInitialValue);
+  const [error, setError] = useState("");
 
   const togglesignup = () =>{
      account ==="signup" ? setAccount("login") :setAccount("signup")
@@ -48,6 +63,7 @@ const Login = () => {
 
   const signupUser = async() =>{
     let response =  await API.userSignup(signup);
+    console.log(response);
     if(response.isSuccess){
       setError("");
       setSignup(signupInitialValue);
@@ -57,6 +73,24 @@ const Login = () => {
        setError("Something went wrong Please try Again later")
     }
   }
+
+  const onValueChange = (e)=>{
+    setLogin({...login, [e.target.name] : e.target.value})
+  }
+
+  const loginUser = async () =>{
+    let response = await API.userLogin(login);
+    if(response.isSuccess){
+      setError("");
+      sessionStorage.setItem("accessToken" , `Bearer ${response.data.accessToken}`);
+      sessionStorage.setItem("refreshToken", `Bearer ${response.data.refreshToken}`);
+
+    }
+    else{
+      setError("Something went wrong ! Please try Again later")
+    }
+  }
+  
   return (
     <>
     {
@@ -79,20 +113,21 @@ const Login = () => {
     <form onSubmit={submitHandler} className="mt-6">
       <div>
         <label className="block text-gray-700">Email Address</label>
-        <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
+        <input type="email" onChange={(e) => onValueChange(e)} value={login.email} name="email"  placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
       </div>
 
       <div className="mt-4">
         <label className="block text-gray-700">Password</label>
-        <input type="password" name="" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+        <input type="password" onChange={(e) => onValueChange(e)} value={login.password} name="password"  placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
               focus:bg-white focus:outline-none" required/>
       </div>
 
       <div className="text-right mt-2">
         <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
       </div>
+      {error && <Error>{error}</Error>}
 
-      <button  type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
+      <button onClick={()=> loginUser()}  type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
             px-4 py-3 mt-6">Log In</button>
     </form>
 
@@ -125,21 +160,21 @@ const Login = () => {
 
     <div>
         <label  className="block text-gray-700"> Username</label>
-        <input onChange={onInputChange} value={signup.username} type="text" name="username" id="" placeholder="Enter Username" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
+        <input onChange={(e) => onInputChange(e)} value={signup.username} type="text" name="username"  placeholder="Enter Username" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
       </div>
       <div className="mt-4">
         <label className="block text-gray-700">Email Address</label>
-        <input onChange={onInputChange} value={signup.email} type="email" name="email" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
+        <input onChange={(e) => onInputChange(e)} value={signup.email} type="email" name="email"  placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete = "true" required/>
       </div>
 
       <div className="mt-4">
         <label className="block text-gray-700">Password</label>
-        <input onChange={onInputChange} value={signup.password} type="password" name="password" id="" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+        <input onChange={(e) => onInputChange(e)} value={signup.password} type="password" name="password"  placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
               focus:bg-white focus:outline-none" required/>
       </div>
-
-      
-      <button type="submit" onClick={subbmit} className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
+  
+      {error && <Error>{error}</Error>}
+      <button type="submit" onClick={signupUser} className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
             px-4 py-3 mt-6">Sign up</button>
     </form>
 
