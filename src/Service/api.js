@@ -33,6 +33,7 @@ axiosInstance.interceptors.response.use(
 ///========================================/////////
 //  if success -> return { isSuccess : true , data ; Object}
 //  if failure -> return { isFailure : true , status : string , msg : string , code : int }
+
 const processResponse = (response)=>{
      if (response?.status === 200){
         return {
@@ -75,7 +76,6 @@ const processError = async (error) =>{
         msg : API_NOTIFICATIONS_MESSAGES.requestFailure,
         code : ""
      }
-
     }
     else{
     // something happened in setting up request that triggers an error(frontend)

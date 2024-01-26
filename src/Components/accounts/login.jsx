@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, {useContext, useState } from 'react'
 import {API} from  "../../Service/api"
 import axios from 'axios'
-import { Typography } from '@mui/material'
+import { Typography  , styled} from '@mui/material'
 // import Box from '@mui/material/Box';
 // import { Button, TextField } from '@mui/material';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
+import { DataContext } from '../../Context/DataProvider';
+import { useNavigate } from 'react-router-dom';
 
 const Error = styled(Typography)`
   font-size : 10px;
@@ -13,8 +15,7 @@ const Error = styled(Typography)`
   margin-top : 10px;
   font-weight : 600;
 `
-
-const Login = () => {
+const Login = ({isUserAuthenticated}) => {
 
   const signupInitialValue = {
     username : "",
@@ -31,29 +32,16 @@ const Login = () => {
   e.preventDefault();
   }
 
-  // const subbmit = async ()=>{
-  //   try {
-  //     const dataZ = await axios({
-  //       method: "post",
-  //       url : "http://localhost:8080/signup",
-  //       headers: {
-  //          'content-type': 'application/x-www-form-urlencoded'
-  //          },
-  //       data : signup
-  //   })
-  //   console.log(dataZ);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-  
-  const [account, setAccount] = useState("login");
+  const [account, toggleAccount] = useState("login");
   const [signup, setSignup] = useState(signupInitialValue)
   const [login, setLogin] = useState(loginInitialValue);
   const [error, setError] = useState("");
 
+  const { setAccount } = useContext(DataContext);
+  const navigate  = useNavigate();
+
   const togglesignup = () =>{
-     account ==="signup" ? setAccount("login") :setAccount("signup")
+     account ==="signup" ? toggleAccount("login") :toggleAccount("signup")
   }
   const onInputChange=(e)=>{
       // console.log(e.target.value);
@@ -82,9 +70,13 @@ const Login = () => {
     let response = await API.userLogin(login);
     if(response.isSuccess){
       setError("");
+
       sessionStorage.setItem("accessToken" , `Bearer ${response.data.accessToken}`);
       sessionStorage.setItem("refreshToken", `Bearer ${response.data.refreshToken}`);
 
+      setAccount({username : response.data.username , email: response.data.email})
+      isUserAuthenticated(true);
+      navigate("/")
     }
     else{
       setError("Something went wrong ! Please try Again later")
