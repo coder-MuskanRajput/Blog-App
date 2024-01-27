@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.class {
+  height: 500px;
+  background-image: url("https://i1040.photobucket.com/albums/b406/purpleswag/homepage-background-images-211_zpshfprzfbh.jpg");
+  background-position: center;
+  /* background-size: contain; */
+  background-repeat: no-repeat;
+  width: 100%;
+}
