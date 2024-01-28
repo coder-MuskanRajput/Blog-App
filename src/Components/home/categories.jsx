@@ -7,8 +7,9 @@ const categories = () => {
     <>
      {/* <button className="rounded-lg px-4 py-2 border-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-blue-100 duration-300">Create Blog</button> */}
 
+<Link to={"/create"}>
  <button className=" w-screen mt-2 rounded-lg px-4 py-2 border-2 bg-blue-500 text-blue-100 hover:border-blue-600 hover:bg-transparent hover:text-blue-500 duration-300">Create Blog</button>
-
+ </Link>
 
      <div className="bg-gray-100 ">
     <div className="container mx-auto flex flex-col lg:flex-row p-8">
@@ -18,7 +19,7 @@ const categories = () => {
             <ul className="space-y-2">
                 { blogCategories.map(category =>{
 
-               <li key={category.id}><Link to="#" className="text-blue-500 hover:underline">{category.type}</Link></li>    
+               return <li key={category.id}><Link to="#" className="text-blue-500 hover:underline">{category.type}</Link></li>    
 
                 })}
             </ul>
