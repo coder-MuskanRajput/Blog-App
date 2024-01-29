@@ -1,4 +1,7 @@
-import React, { useState ,useEffect } from 'react'
+import React, { useState ,useEffect ,useContext } from 'react'
+import { useLocation } from 'react-router-dom';
+import {DataContext} from "../../Context/DataProvider";
+import {API} from "../../Service/api"
 
 const createPost = () => {
 const initialPost = {
@@ -13,20 +16,28 @@ const initialPost = {
 const [post, setPost] = useState(initialPost);
 const [file, setFile] = useState("");
 
+const {account} = useContext(DataContext);
+
+const location = useLocation();
+
+const url = post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg"
+
+
 useEffect(()=>{
-   const getImage =() =>{
+   const getImage = async() =>{
      if(file){
       const data = new FormData();
       data.append("name" , file.name);
       data.append("file" , file);
 
       //Api call
-
-      post.picture = "" // TODO
+      const response =  await API.uploadFile(data)
+      post.picture = response.data
      }
    }
    getImage();
-   post.categories;
+   post.categories = location.search?.split("=")[1]||"All";
+   post.username = account.username;
 },[file])
 
 const handleChange = (e)=>{
@@ -34,26 +45,15 @@ const handleChange = (e)=>{
 }
   return (
     <>
-    <div className=" w-screen bg-cover h-64  text-center overflow-hidden create"></div>
+    <div className="bg-green-100 h-screen flex-col items-center">
 
+    <div className=" w-screen bg-cover  h-[500px] text-center overflow-hidden">
+      <img src={url} className='h-[500px] object-cover w-screen bg-center bg-no-repeat'  alt="" />
+    </div>
 
-    <div className="bg-green-100 p-4 flex items-center">
-   <div className="bg-white  p-2 md:w-2/3 lg:w-1/2 mx-auto rounded">
-     <form action="">
-
-       <div className="flex items-center mb-5">
-         <label for="Title" className="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Title</label>
-         <input onChange={(e) => handleChange(e)} name="title"  type="text" placeholder="Title for the Blog" className="border-b-2 border-gray-400 flex-1 py-2 placeholder-gray-300 outline-none focus:border-green-400"/>
-       </div>
-
-       <div className="flex items-center mb-10">
-         <label for="Textarea" className="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Description</label>
-         <textarea onChange={(e) => handleChange(e)} name="description" placeholder="Enter Description Here..........." className="border-none flex-1 py-3 placeholder-gray-300 outline-none"/>
-       </div>
-
-       <div className="flex px-10 w-full items-center  bg-grey-lighter">
+    <div className="flex px-10 w-full items-center  bg-grey-lighter">
         
-        <label className="w-64 flex flex-col items-center px-4 py-4 bg-white text-blue-800 rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-500 hover:text-white">
+        <label className="w-64 flex flex-col items-center px-4 py-4 bg-white text-blue-800 rounded-lg shadow-lg tracking-wide uppercase border  mt-2 border-blue cursor-pointer hover:bg-blue-500 hover:text-white">
             <svg className="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
             </svg>
@@ -61,6 +61,20 @@ const handleChange = (e)=>{
             <input type='file' onChange={(e)=>setFile(e.target.files[0])} className="hidden" />
         </label>
      </div>
+
+   <div className="bg-white  p-2 md:w-2/3 lg:w-1/2 mx-auto rounded">
+     <form action="">
+
+       <div className="flex items-center mb-5">
+         <label htmlFor="Title" className="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Title</label>
+         <input onChange={(e) => handleChange(e)} name="title"  type="text" placeholder="Title for the Blog" className="border-b-2 border-gray-400 flex-1 py-2 placeholder-gray-300 outline-none focus:border-green-400"/>
+       </div>
+
+       <div className="flex items-center mb-10">
+         <label htmlFor="Textarea" className="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Description</label>
+         <textarea onChange={(e) => handleChange(e)} name="description" placeholder="Enter Description Here..........." className="border-none flex-1 py-3 placeholder-gray-300 outline-none"/>
+       </div>
+
        <div className="text-right">
     <button className="col-start-11 col-end-13 rounded-lg px-8 py-3 bg-blue-500 text-blue-100 hover:bg-blue-800 duration-300">Publish Blog</button>
 

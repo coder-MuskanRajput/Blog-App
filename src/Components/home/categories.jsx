@@ -1,13 +1,17 @@
 import React from 'react'
 
 import {blogCategories} from "../../Constants/data"
-import { Link } from 'react-router-dom'
+import { Link  , useSearchParams} from 'react-router-dom'
 const categories = () => {
+
+    const [searchParams] = useSearchParams();
+    const category = searchParams.get('category');
   return (
+    
     <>
      {/* <button className="rounded-lg px-4 py-2 border-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-blue-100 duration-300">Create Blog</button> */}
 
-<Link to={"/create"}>
+<Link to={`/create?category=${category || ''}`}>
  <button className=" w-screen mt-2 rounded-lg px-4 py-2 border-2 bg-blue-500 text-blue-100 hover:border-blue-600 hover:bg-transparent hover:text-blue-500 duration-300">Create Blog</button>
  </Link>
 
@@ -15,11 +19,11 @@ const categories = () => {
     <div className="container mx-auto flex flex-col lg:flex-row p-8">
     
         <div className="w-full lg:w-1/4 mb-6 lg:mb-0">
-            <h2 className="text-lg font-semibold mb-4">Categories</h2>
+            <Link to={"/"} className="text-lg font-semibold "> All Categories</Link>
             <ul className="space-y-2">
                 { blogCategories.map(category =>{
 
-               return <li key={category.id}><Link to="#" className="text-blue-500 hover:underline">{category.type}</Link></li>    
+               return <li key={category.id}><Link to = {`/?category${category.type}`} className=" text-blue-800 font-semibold hover:underline">{category.type}</Link></li>    
 
                 })}
             </ul>
