@@ -1,7 +1,7 @@
 import React, { useState ,useEffect ,useContext } from 'react'
 import { useLocation } from 'react-router-dom';
-import {DataContext} from "../../Context/DataProvider";
-import {API} from "../../Service/api"
+import { DataContext } from "../../Context/DataProvider";
+import { API } from "../../Service/api"
 
 const createPost = () => {
 const initialPost = {
@@ -16,7 +16,7 @@ const initialPost = {
 const [post, setPost] = useState(initialPost);
 const [file, setFile] = useState("");
 
-const {account} = useContext(DataContext);
+const { account } = useContext(DataContext);
 
 const location = useLocation();
 
@@ -31,12 +31,12 @@ useEffect(()=>{
       data.append("file" , file);
 
       //Api call
-      const response =  await API.uploadFile(data)
+      const response =  await API.uploadFile(data);
       post.picture = response.data
      }
    }
    getImage();
-   post.categories = location.search?.split("=")[1]||"All";
+   post.categories = location.search?.split("=")[1] || "All";
    post.username = account.username;
 },[file])
 
@@ -63,11 +63,11 @@ const handleChange = (e)=>{
      </div>
 
    <div className="bg-white  p-2 md:w-2/3 lg:w-1/2 mx-auto rounded">
-     <form action="">
+     <form >
 
        <div className="flex items-center mb-5">
          <label htmlFor="Title" className="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Title</label>
-         <input onChange={(e) => handleChange(e)} name="title"  type="text" placeholder="Title for the Blog" className="border-b-2 border-gray-400 flex-1 py-2 placeholder-gray-300 outline-none focus:border-green-400"/>
+         <input onChange = {(e) => handleChange(e)} name="title"  type="text" placeholder="Title for the Blog" className="border-b-2 border-gray-400 flex-1 py-2 placeholder-gray-300 outline-none focus:border-green-400"/>
        </div>
 
        <div className="flex items-center mb-10">

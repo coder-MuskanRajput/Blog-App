@@ -102,6 +102,7 @@ for (const [key , value] of Object.entries(SERVICE_URLS)){
             url:value.url,
             data: body,
             responseType : value.responseType,
+            headers :value.header || {"Content-Type" : "application/json"},
             onUploadProgress : function(progressEvent){
                 if(showUploadProgress){
                     let percentageCompleted = Math.round((progressEvent.loaded = 100)/progressEvent.total)
