@@ -1,5 +1,5 @@
 import React, { useState ,useEffect ,useContext } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation ,useNavigate } from 'react-router-dom';
 import { DataContext } from "../../Context/DataProvider";
 import { API } from "../../Service/api"
 
@@ -19,9 +19,11 @@ const [file, setFile] = useState("");
 const { account } = useContext(DataContext);
 
 const location = useLocation();
+const navigate  = useNavigate();
 
-const url = post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg"
+// let url2 = post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg"
 
+const [url, setUrl] = useState(post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg")
 
 useEffect(()=>{
    const getImage = async() =>{
@@ -33,6 +35,7 @@ useEffect(()=>{
       //Api call
       const response =  await API.uploadFile(data);
       post.picture = response.data
+      setUrl(response.data);
      }
    }
    getImage();
@@ -42,6 +45,13 @@ useEffect(()=>{
 
 const handleChange = (e)=>{
   setPost({...post ,[e.target.name]: e.target.value})
+}
+
+const savePost = async () =>{
+  let response =  await  API.createPost(post);
+   if(response.isSuccess){
+     navigate("/");
+   }
 }
   return (
     <>
@@ -76,7 +86,7 @@ const handleChange = (e)=>{
        </div>
 
        <div className="text-right">
-    <button className="col-start-11 col-end-13 rounded-lg px-8 py-3 bg-blue-500 text-blue-100 hover:bg-blue-800 duration-300">Publish Blog</button>
+    <button onClick={() =>savePost} className="col-start-11 col-end-13 rounded-lg px-8 py-3 bg-blue-500 text-blue-100 hover:bg-blue-800 duration-300">Publish Blog</button>
 
          {/* <button className="py-3 px-8 bg-green-500 text-green-100 font-bold rounded">Submit</button> */}
        </div>

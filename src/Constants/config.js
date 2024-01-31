@@ -28,10 +28,11 @@ export const API_NOTIFICATIONS_MESSAGES={
 // Sample Request
 // Need Service Call : {url :"/" , method :"POST /GET/PUT/DELETE" , params:true/false , query : true/false}
 
-export const SERVICE_URLS ={
+export const SERVICE_URLS = {
+
     userSignup:{url :"/signup" ,method : "POST"},
     userLogin :{url :"/login" , method : "POST"},  
-    uploadFile :{url : "/file/upload" , method :"POST" , header:{
-      "Content-Type":"multipart/form-data"
-   }}  
+    uploadFile :{url : "/file/upload" , method :"POST" , header:"multipart/form-data"},
+    createPost :{url : "/create" , method : "POST"}
+
 }
