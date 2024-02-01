@@ -48,6 +48,8 @@ const handleChange = (e)=>{
 }
 
 const savePost = async () =>{
+  
+  console.log("butoonnn clickend");
   let response =  await  API.createPost(post);
    if(response.isSuccess){
      navigate("/");
@@ -73,7 +75,7 @@ const savePost = async () =>{
      </div>
 
    <div className="bg-white  p-2 md:w-2/3 lg:w-1/2 mx-auto rounded">
-     <form >
+     <form onSubmit={(e) => e.preventDefault() }>
 
        <div className="flex items-center mb-5">
          <label htmlFor="Title" className="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Title</label>
@@ -86,7 +88,7 @@ const savePost = async () =>{
        </div>
 
        <div className="text-right">
-    <button onClick={() =>savePost} className="col-start-11 col-end-13 rounded-lg px-8 py-3 bg-blue-500 text-blue-100 hover:bg-blue-800 duration-300">Publish Blog</button>
+    <button onClick={() =>savePost()} className="col-start-11 col-end-13 rounded-lg px-8 py-3 bg-blue-500 text-blue-100 hover:bg-blue-800 duration-300">Publish Blog</button>
 
          {/* <button className="py-3 px-8 bg-green-500 text-green-100 font-bold rounded">Submit</button> */}
        </div>
