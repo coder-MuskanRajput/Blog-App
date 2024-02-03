@@ -7,6 +7,7 @@ import Login  from "./Components/accounts/login";
 import Home from "./Components/home/home";
 import Header from "./Components/header/header";
 import CreatePost from "./Components/create/createPost";
+import DetailView from "./Components/details/DetailView"
 
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
@@ -32,6 +33,12 @@ const App = () => {
       <Route path="/create" element = {<PrivateRoute isAuthenticated={isAuthenticated} />}>
       <Route path='/create' element={< CreatePost />}/> 
       </Route>
+
+      
+      <Route path="/details/:id" element = {<PrivateRoute isAuthenticated={isAuthenticated} />}>
+      <Route path='/details/:id' element={< DetailView />}/> 
+      </Route>
+
      </Routes>
      </BrowserRouter>
     </DataProvider>

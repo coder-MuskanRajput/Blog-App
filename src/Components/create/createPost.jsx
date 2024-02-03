@@ -49,7 +49,7 @@ const handleChange = (e)=>{
 
 const savePost = async () =>{
   
-  console.log("butoonnn clickend");
+  console.log("button clicked");
   let response =  await  API.createPost(post);
    if(response.isSuccess){
      navigate("/");
