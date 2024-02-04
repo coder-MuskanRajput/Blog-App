@@ -34,6 +34,6 @@ export const SERVICE_URLS = {
     userLogin :{url :"/login" , method : "POST"},  
     uploadFile :{url : "/file/upload" , method :"POST" , header:"multipart/form-data"},
     createPost :{url : "/create" , method : "POST"},
-    getAllPosts: {url : "/post" , method : "GET" , params : true}
-
+    getAllPosts: {url : "/posts" , method : "GET" , params : true},
+    getPostById: {url: "/post" , method : "GET" , query: true}
 }

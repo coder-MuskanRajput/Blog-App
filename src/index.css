@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .banner {
   height: 500px;
   background-image: url("https://i1040.photobucket.com/albums/b406/purpleswag/homepage-background-images-211_zpshfprzfbh.jpg");
@@ -10,6 +11,8 @@
   background-repeat: no-repeat;
   width: 100%;
 }
+
+
 
 .gradient {
   background-image: linear-gradient(
@@ -22,3 +25,34 @@
 .group:hover .group-hover\:translate-y-0 {
   transform: translateY(0);
 }
+
+
+.button {
+  font-family:'Open Sans';
+  font-size: 16px;
+  font-weight:400;
+  display:inline-block;
+  color:#FFF;
+  border-radius: .25em;
+  text-shadow: -1px -1px 0px rgba(0,0,0,0.4);
+}
+
+.primary {
+  line-height:40px;
+  transition:ease-in-out .2s;
+  padding: 0 16px;
+}
+
+.primary:hover {
+  transform:scale(1.02);
+  box-shadow:2px 2px 5px rgba(0,0,0,0.20), inset 0 0 0 99999px rgba(0,0,0,0.2);
+}
+
+.edit {
+  background: rgb(52, 152, 219);
+}
+
+.delete {
+  background: rgb(219, 46, 27);
+}
+

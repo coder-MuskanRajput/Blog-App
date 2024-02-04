@@ -42,11 +42,11 @@ const post = () => {
           <div className="absolute left-0 right-0 bottom-0 p-6 z-30 transform translate-y-1/2 transition duration-300 h-full group-hover:translate-y-0 delay-100">
             <div className="h-1/2 relative">
               <div className="absolute bottom-0">
-                <h2 className="font-bold text-white leading-tight transition duration-300 text-xl pb-6 group-hover:underline">{addEllipsis(post.title ,20)}</h2>
+                <h2 className="font-bold text-white leading-tight transition duration-300 text-xl pb-6 group-hover:underline"> {post.categories}</h2>
               </div>
             </div>
             <div className="h-1/2">
-              <p className="text-white pb-4 opacity-0 transition duration-300 group-hover:opacity-100">{post.categories}</p>
+              <h1 className="text-white pb-4 opacity-0 transition duration-300 group-hover:opacity-100">{addEllipsis(post.title ,20)} </h1>
 
               <Link to={`details/${post._id}`} className="bg-white text-black text-sm px-3 py-1 font-semibold opacity-0 transition duration-300 group-hover:opacity-100 border-2 border-white focus:border-black focus:bg-gray-300">Read More</Link>
             </div>
