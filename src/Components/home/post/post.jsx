@@ -66,3 +66,17 @@ const post = () => {
 }
 
 export default post
+
+
+
+      {/* <div className = 'container my-5'>
+
+        <div className='card detail-card p-0 '>
+         <img src={url} alt="Blog" />
+         <h1>{post.title}</h1>
+         <h2>{post.username}</h2>
+         <p>{new Date(post.createdDate).toDateString()}</p>
+         <p>{post.description}</p>
+
+         </div>
+      </div> */}

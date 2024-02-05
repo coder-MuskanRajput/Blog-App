@@ -1,0 +1,290 @@
+.bgRed{ 
+    background-color: red; 
+   } 
+    
+    
+    
+   :root { 
+    --hue: 223; 
+    --bg: hsl(var(--hue),90%,90%); 
+    --fg: hsl(var(--hue),90%,10%); 
+    --danger: hsl(3,90%,45%); 
+    --danger-down: hsl(3,90%,65%); 
+    --white: hsl(0,0%,100%); 
+    --trans-dur: 0.3s; 
+    /* font-size: calc(20px + (60 - 20) * (50vw - 520px) / (4560 - 320)); */ 
+   } 
+    
+    
+   .delBtn { 
+    background-color: var(--danger); 
+    border-radius: 0.2em; 
+    color: var(--white); 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    margin: auto; 
+    outline: transparent; 
+    padding: 0.75em 1.5em; 
+    -webkit-tap-highlight-color: #0000; 
+    transition: background-color var(--trans-dur); 
+    /* background-color: rgba(255, 0, 0, 0.473); */ 
+   } 
+   .delBtn:not(:disabled):focus-visible, 
+   .delBtn:not(:disabled):hover { 
+    background-color: var(--danger-down); 
+   } 
+   .delBtnIcon { 
+    display: block; 
+    margin: -0.75em 0 -0.75em -0.75em; 
+    pointer-events: none; 
+    width: 3em; 
+    height: 3em; 
+   } 
+   .delBtnIconLid { 
+    transform-origin: 12px 5px; 
+   } 
+   .delBtnIconCan { 
+    transform-origin: 12px 18px; 
+   } 
+   .delBtnLetters { 
+    display: flex; 
+   } 
+   .delBtnLetter, 
+   .delBtnLetterBox { 
+    display: inline-block; 
+   } 
+   .delBtn[data-running="false"] .delBtnLetters { 
+    animation: fadeIn 0.3s cubic-bezier(0.77,0,0.18,1) forwards; 
+   } 
+   .delBtn[data-running="true"] .delBtnIconLid, 
+   .delBtn[data-running="true"] .delBtnIconCan, 
+   .delBtn[data-running="true"] .delBtnIconCanFill, 
+   .delBtn[data-running="true"] .delBtnLetter, 
+   .delBtn[data-running="true"] .delBtnLetterBox { 
+    animation: trashLid 2s cubic-bezier(0.77,0,0.18,1) forwards; 
+   } 
+   .delBtn[data-running="true"] .delBtnIconCan { 
+    animation-name: trashCan; 
+   } 
+   .delBtn[data-running="true"] .delBtnIconCanFill { 
+    animation-name: trashCanFill; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox { 
+    animation-name: letterDrop; 
+    animation-timing-function: cubic-bezier(0.77,0,1,1); 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(1) .delBtnLetter { 
+    animation-name: letter1; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(2), 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(2) .delBtnLetter { 
+    animation-delay: 0.04s; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(2) .delBtnLetter { 
+    animation-name: letter2; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(3), 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(3) .delBtnLetter { 
+    animation-delay: 0.08s; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(3) .delBtnLetter { 
+    animation-name: letter3; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(4), 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(4) .delBtnLetter { 
+    animation-delay: 0.12s; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(4) .delBtnLetter { 
+    animation-name: letter4; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(5), 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(5) .delBtnLetter { 
+    animation-delay: 0.16s; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(5) .delBtnLetter { 
+    animation-name: letter5; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(6), 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(6) .delBtnLetter { 
+    animation-delay: 0.2s; 
+   } 
+   .delBtn[data-running="true"] .delBtnLetterBox:nth-child(6) .delBtnLetter { 
+    animation-name: letter6; 
+   } 
+    
+   /* Dark theme */ 
+   @media (prefers-color-scheme: dark) { 
+    :root { 
+     --bg: hsl(var(--hue),90%,10%); 
+     --fg: hsl(var(--hue),90%,90%); 
+    } 
+   } 
+    
+   /* Animations */ 
+   @keyframes fadeIn { 
+    from { opacity: 0; } 
+    to { opacity: 1; } 
+   } 
+   @keyframes trashLid { 
+    from, 
+    86%, 
+    to { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33%, 
+    46% { 
+     animation-timing-function: cubic-bezier(0.77,0,1,1); 
+     transform: translate(-2px,-4px) rotate(-40deg); 
+    } 
+    54%, 
+    70% { 
+     animation-timing-function: linear; 
+     transform: translate(0,0) rotate(0); 
+    } 
+    62% { 
+     animation-timing-function: linear; 
+     transform: translate(0,-2px) rotate(9deg); 
+    } 
+    78% { 
+     animation-timing-function: cubic-bezier(0,0,0.18,1); 
+     transform: translate(0,-1px) rotate(-6deg); 
+    } 
+   } 
+   @keyframes trashCan
+   { 
+    from, 
+    86%, 
+    to { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33%, 
+    46% { 
+     animation-timing-function: cubic-bezier(0.77,0,1,1); 
+     transform: translate(-8px,3px) rotate(40deg); 
+    } 
+    54%, 
+    70% { 
+     animation-timing-function: linear; 
+     transform: translate(0,0) rotate(0); 
+    } 
+    62% { 
+     animation-timing-function: linear; 
+     transform: translate(-1px,0) rotate(-4deg); 
+    } 
+    78% { 
+     animation-timing-function: cubic-bezier(0,0,0.18,1); 
+     transform: translate(0,0) rotate(2deg); 
+    } 
+   } 
+   @keyframes trashCanFill { 
+    from, 
+    25%, 
+    to { 
+     y: 24px; 
+    } 
+    66.67%, 
+    83.33% { 
+     y: 12px; 
+    } 
+   } 
+   @keyframes letterDrop { 
+    from, 
+    33.33% { 
+     transform: translate(0,0); 
+    } 
+    41.67%, 
+    to { 
+     transform: translate(0,0.625em); 
+    } 
+   } 
+   @keyframes letter1 { 
+    from { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33% { 
+     transform: translate(0.75em,0) rotate(30deg) scale(1); 
+    } 
+    41.67% { 
+     transform: translate(-2.375em,0) rotate(-135deg) scale(0.75); 
+    } 
+    46%, 
+    to { 
+     transform: translate(-2.375em,0) rotate(-135deg) scale(0); 
+    } 
+   } 
+   @keyframes letter2 { 
+    from { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33% { 
+     transform: translate(0.75em,0) rotate(30deg) scale(1); 
+    } 
+    41.67% { 
+     transform: translate(-3em,0) rotate(-135deg) scale(0.75); 
+    } 
+    46%, 
+    to { 
+     transform: translate(-3em,0) rotate(-135deg) scale(0); 
+    } 
+   } 
+   @keyframes letter3 { 
+    from { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33% { 
+     transform: translate(0.75em,0) rotate(30deg) scale(1); 
+    } 
+    41.67% { 
+     transform: translate(-3.375em,0) rotate(-135deg) scale(0.75); 
+    } 
+    46%, 
+    to { 
+     transform: translate(-3.375em,0) rotate(-135deg) scale(0); 
+    } 
+   } 
+   @keyframes letter4 { 
+    from { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33% { 
+     transform: translate(0.75em,0) rotate(30deg) scale(1); 
+    } 
+    41.67% { 
+     transform: translate(-3.75em,0) rotate(-135deg) scale(0.75); 
+    } 
+    46%, 
+    to { 
+     transform: translate(-3.75em,0) rotate(-135deg) scale(0); 
+    } 
+   } 
+   @keyframes letter5 { 
+    from { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33% { 
+     transform: translate(0.75em,0) rotate(30deg) scale(1); 
+    } 
+    41.67% { 
+     transform: translate(-4.125em,0) rotate(-135deg) scale(0.75); 
+    } 
+    46%, 
+    to { 
+     transform: translate(-4.125em,0) rotate(-135deg) scale(0); 
+    } 
+   } 
+   @keyframes letter6 { 
+    from { 
+     transform: translate(0,0) rotate(0); 
+    } 
+    33.33% { 
+     transform: translate(0.75em,0) rotate(30deg) scale(1); 
+    } 
+    41.67% { 
+     transform: translate(-4.75em,0) rotate(-135deg) scale(0.75); 
+    } 
+    46%, 
+    to { 
+     transform: translate(-4.75em,0) rotate(-135deg) scale(0); 
+    } 
+   }

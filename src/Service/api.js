@@ -109,9 +109,9 @@ for (const [key , value] of Object.entries(SERVICE_URLS)){
        return axiosInstance({
             method: value.method,
             url:value.url,
-            data: body,
+            data:value.method==="DELETE" ? {} : body,
             responseType : value.responseType,
-            headers :{"Content-Type" : value.header || "application/json" , authorization :getAccessToken()  },
+            headers :{"Content-Type" : value.header || "application/json" , authorization :getAccessToken() },
             TYPE : getType(value , body) ,
             onUploadProgress : function(progressEvent){
                 if(showUploadProgress){
