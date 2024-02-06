@@ -5,7 +5,7 @@ import {API} from "../../../Service/api"
 
 //Components
 
-import ShowComments from "./ShowComments";
+import Comment from "./Comment";
 
 export const Comments = ({ post }) =>{
 
@@ -18,6 +18,7 @@ export const Comments = ({ post }) =>{
     
     const [comment, setComment] = useState(initialValues);
     const [comments, setComments] = useState([]);
+    const [toggle, setToggle] = useState(false)
 
     const {account} = useContext(DataContext);
 
@@ -29,7 +30,7 @@ export const Comments = ({ post }) =>{
           }
          }
          getData();
-    },[post])
+    },[post , toggle])
     const handleChange = (e) =>{
         setComment({...comment ,
              name :account.username,
@@ -43,6 +44,7 @@ export const Comments = ({ post }) =>{
       if(response.isSuccess){
         setComment(initialValues);
       }
+      setToggle(true)
     }
      return(
     <>
@@ -66,6 +68,15 @@ export const Comments = ({ post }) =>{
 </div>
 
 </div>
+
+{
+  comments && comments.length > 0
+    ? comments.map(comment => (
+        <Comment key={comment.id} comment={comment} setToggle={setToggle} />
+      ))
+    : null
+}
+
     </>
     )
 }
