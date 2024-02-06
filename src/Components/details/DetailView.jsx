@@ -4,6 +4,11 @@ import {Link, useParams , useNavigate} from "react-router-dom"
  
 import {API} from "../../Service/api"; 
 import { DataContext } from '../../Context/DataProvider'; 
+
+
+import Comments from './comments/Comments';
+
+
 import './Style.css' 
  
 const DetailView = () => { 
@@ -13,14 +18,20 @@ const DetailView = () => {
   const {account} = useContext(DataContext); 
   const [isImageAvailable, setIsImageAvailable] = useState(true) 
   const navigate = useNavigate();
-
+  const [isUserTrue, setIsUserTrue] = useState(false)
 
   const url = post.picture ? post.picture :"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" 
   useEffect(()=>{ 
        const fetchData = async ()=>{ 
         let response = await API.getPostById(id); 
         if(response.isSuccess){ 
-          setPost(response.data); 
+         setPost(response.data); 
+
+          if(account.username === response.data.username){
+           setIsUserTrue(true);
+            console.log(isUserTrue)
+        }
+        // console.log(account)
           if(post.picture == '' && !post.picture){ 
             setIsImageAvailable(false) 
           }  
@@ -77,15 +88,15 @@ const DetailView = () => {
  
   const deleteHandler = async () => { 
     // Handle delete button click 
+    setTimeout(async () =>{
     let response  = await API.deletePost(post._id);
     if(response.isSuccess){
          navigate("/")
     }
-    console.log("Button clicked!"); 
+  } , 1300);
+  console.log("Button clicked!"); 
   }; 
  
- 
-  
   return ( 
     <> 
 <div className='w-full h-full flex flex-col bg-slate-100 p-2 pt-[12vh] gap-3 items-center'> 
@@ -94,9 +105,10 @@ const DetailView = () => {
   <span className='text-3xl w-full'>{post.title}</span> 
   <div className='w-full md:w-[80%] h-[45vh] flex flex-col items-center justify-center bg-gray-200 gap-2'> 
   <img className='min-h-[80%] h-full' src={isImageAvailable ? post.picture:'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' } alt="here is image of post" /> 
-  { account.username === post.username ? (
+  {
+   isUserTrue ? (
    <div className='flex gap-2 '> 
-  <button onClick={()=>{deleteHandler}} className={`delBtn bg-red-700`} type="button" aria-label="Delete"> 
+  <button onClick={()=>{deleteHandler()}} className={`delBtn bg-red-700`} type="button" aria-label="Delete"> 
   <svg className="delBtnIcon" viewBox="0 0 48 48" width="48px" height="48px" aria-hidden="true"> 
     <clipPath id="canClip"> 
       <rect className="delBtnIconCanFill" x="5" y="24" width="14" height="11" /> 
@@ -140,11 +152,12 @@ const DetailView = () => {
 <svg className='text-sm h-[70%] ' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="currentColor"><path d="M15.7279 9.57627L14.3137 8.16206L5 17.4758V18.89H6.41421L15.7279 9.57627ZM17.1421 8.16206L18.5563 6.74785L17.1421 5.33363L15.7279 6.74785L17.1421 8.16206ZM7.24264 20.89H3V16.6473L16.435 3.21231C16.8256 2.82179 17.4587 2.82179 17.8492 3.21231L20.6777 6.04074C21.0682 6.43126 21.0682 7.06443 20.6777 7.45495L7.24264 20.89Z"></path></svg> 
 Edit 
   </Link>
-  </div>):(null) 
-}
+  </div>
+  ):("") 
+  }
   </div> 
   <p className='text-base'>{post.description}</p> 
- 
+  <Comments post={post}/>
 </div> 
     </> 
   ) 

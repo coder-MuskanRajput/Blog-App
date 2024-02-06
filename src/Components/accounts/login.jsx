@@ -74,7 +74,7 @@ const Login = ({isUserAuthenticated}) => {
       sessionStorage.setItem("accessToken" , `Bearer ${response.data.accessToken}`);
       sessionStorage.setItem("refreshToken", `Bearer ${response.data.refreshToken}`);
 
-      setAccount({username : response.data.username , email: response.data.email})
+      setAccount({username : response.data.user , email: response.data.email})
       isUserAuthenticated(true);
       navigate("/")
     }

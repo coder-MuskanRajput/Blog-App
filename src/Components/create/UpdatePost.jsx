@@ -32,6 +32,10 @@ useEffect(() =>{
          let response = await API.getPostById(id);
          if(response.isSuccess){
             setPost(response.data);
+
+          //  post.picture = response.data.picture
+           setUrl(response.data.picture);
+
          }
       }
       fetchData();
@@ -47,6 +51,7 @@ useEffect(()=>{
       //Api call
       const response =  await API.uploadFile(data);
       post.picture = response.data
+      setPost({...post , picture : response.data})
       setUrl(response.data);
      }
    }
@@ -61,7 +66,6 @@ const handleChange = (e)=>{
 
 const updateBlogPost = async () =>{
   
-  console.log("button clicked");
   let response =  await  API.updatePost(post);
    if(response.isSuccess){
      navigate(`/details/${id}`);
@@ -72,7 +76,7 @@ const updateBlogPost = async () =>{
     <div className="bg-green-100 h-screen flex-col items-center">
 
     <div className=" w-screen bg-cover  h-[500px] text-center overflow-hidden">
-      <img src={url} className='h-[500px] object-cover w-screen bg-center bg-no-repeat'  alt="" />
+      <img src={url}  className='h-[500px] object-cover w-screen bg-center bg-no-repeat'  alt="" />
     </div>
 
     <div className="flex px-10 w-full items-center  bg-grey-lighter">
