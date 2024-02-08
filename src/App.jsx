@@ -9,6 +9,8 @@ import Header from "./Components/header/header";
 import CreatePost from "./Components/create/createPost";
 import DetailView from "./Components/details/DetailView";
 import UpdatePost from './Components/create/UpdatePost';
+import About from "./Components/about/About";
+import Contact from "./Components/contact/Contact";
 
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
@@ -42,6 +44,15 @@ const App = () => {
 
       <Route path="/update/:id" element = {<PrivateRoute isAuthenticated={isAuthenticated} />}>
       <Route path='/update/:id' element={< UpdatePost />}/> 
+      </Route>
+
+      <Route path="/about" element = {<PrivateRoute isAuthenticated={isAuthenticated} />}>
+      <Route path='/about' element={< About />}/> 
+      </Route>
+
+      
+      <Route path="/contact" element = {<PrivateRoute isAuthenticated={isAuthenticated} />}>
+      <Route path='/contact' element={< Contact />}/> 
       </Route>
 
      </Routes>

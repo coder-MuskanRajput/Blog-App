@@ -41,7 +41,8 @@ const DetailView = () => {
   }, []) 
  
   // delete button animation 
- 
+  const [isSuccessTrue, setIsSuccessTrue] = useState(false)
+
   useEffect(() => { 
     // Ensure that DeleteButton class is defined 
     class DeleteButton { 
@@ -73,6 +74,11 @@ const DetailView = () => {
       reset() { 
         this.isRunning = false; 
         this.displayState(); 
+        
+          navigate("/") 
+        
+      
+        
       } 
     } 
  
@@ -88,26 +94,24 @@ const DetailView = () => {
  
   const deleteHandler = async () => { 
     // Handle delete button click 
-    setTimeout(async () =>{
     let response  = await API.deletePost(post._id);
     if(response.isSuccess){
-         navigate("/")
+      setIsSuccessTrue(true)
     }
-  } , 1300);
   console.log("Button clicked!"); 
   }; 
  
   return ( 
     <> 
+
 <div className='w-full h-full flex flex-col bg-slate-100 p-2 pt-[12vh] gap-3 items-center'> 
    
   <div className='text-gray-600 text-sm flex items-center justify-between w-full'><span>Author :<span className='font-bold'> {post.username}</span> , { new Date(post.createdDate).toDateString()}</span> <span>Category : {post.categories}</span></div> 
   <span className='text-3xl w-full'>{post.title}</span> 
   <div className='w-full md:w-[80%] h-[45vh] flex flex-col items-center justify-center bg-gray-200 gap-2'> 
   <img className='min-h-[80%] h-full' src={isImageAvailable ? post.picture:'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' } alt="here is image of post" /> 
-  {
-   isUserTrue ? (
-   <div className='flex gap-2 '> 
+  
+   <div className={`flex gap-2 ${isUserTrue ? "" : "hidden"}`}> 
   <button onClick={()=>{deleteHandler()}} className={`delBtn bg-red-700`} type="button" aria-label="Delete"> 
   <svg className="delBtnIcon" viewBox="0 0 48 48" width="48px" height="48px" aria-hidden="true"> 
     <clipPath id="canClip"> 
@@ -153,8 +157,6 @@ const DetailView = () => {
 Edit 
   </Link>
   </div>
-  ):("") 
-  }
   </div> 
   <p className='text-base'>{post.description}</p> 
   <Comments post={post}/>
