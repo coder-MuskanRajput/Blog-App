@@ -7,6 +7,8 @@ import { Typography  , styled} from '@mui/material'
 // import styled from '@emotion/styled';
 import { DataContext } from '../../Context/DataProvider';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
+
 
 const Error = styled(Typography)`
   font-size : 10px;
@@ -55,6 +57,7 @@ const Login = ({isUserAuthenticated}) => {
     if(response.isSuccess){
       setError("");
       setSignup(signupInitialValue);
+      toast.success("Created Account signup Successfully")
       togglesignup("login")
     }
     else{
@@ -76,6 +79,8 @@ const Login = ({isUserAuthenticated}) => {
 
       setAccount({username : response.data.user , email: response.data.email})
       isUserAuthenticated(true);
+      toast.success("Login Account Successfully")
+
       navigate("/")
     }
     else{
