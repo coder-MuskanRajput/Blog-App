@@ -16,9 +16,9 @@ const header = () => {
     <>
      <nav className="flex flex-wrap z-10 fixed w-screen h-20 items-center justify-end md:justify-center p-5 bg-slate-700">  
 
-     <div onClick={openMenu} className="flex md:hidden">
+     <div onClick={openMenu}  className="flex md:hidden">
         <button id="hamburger">
-          <img className="toggle block" src="https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png" width="40" height="40" />
+          <img className="toggle  block" src="https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png" width="40" height="40" />
           <img className="toggle hidden" src="https://img.icons8.com/fluent-systems-regular/2x/close-window.png" width="40" height="40" />
         </button>
       </div>      

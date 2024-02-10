@@ -10,6 +10,7 @@ import Comments from './comments/Comments';
 
 
 import './Style.css' 
+import { toast } from 'react-toastify';
  
 const DetailView = () => { 
    
@@ -26,7 +27,6 @@ const DetailView = () => {
         let response = await API.getPostById(id); 
         if(response.isSuccess){ 
          setPost(response.data); 
-
           if(account.username === response.data.username){
            setIsUserTrue(true);
             console.log(isUserTrue)
@@ -97,6 +97,7 @@ const DetailView = () => {
     let response  = await API.deletePost(post._id);
     if(response.isSuccess){
       setIsSuccessTrue(true)
+      toast.success("Post Delete Successfully !")
     }
   console.log("Button clicked!"); 
   }; 

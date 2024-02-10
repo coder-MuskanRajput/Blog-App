@@ -4,12 +4,18 @@ import {blogCategories} from "../../Constants/data"
 import  Post  from "../home/post/post";
 import  MyPost  from "../home/post/myPost";
 
-import { Link  , useSearchParams} from 'react-router-dom'
+import { Link  , useNavigate, useSearchParams} from 'react-router-dom'
+import myPost from '../home/post/myPost';
 const categories = () => {
-
+     const  navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const category = searchParams.get('category');
     const [checkMyPost, setCheckMyPost] = useState(false)
+    
+    const myPostHandler = () => {
+            setCheckMyPost(true)
+            navigate("/")
+    }
   return (
 
     <>
@@ -28,9 +34,9 @@ const categories = () => {
                 { blogCategories.map(category =>{
 
                 return <li key={category.id}><Link to = {`/?category=${category.type}`} className=" text-blue-800 font-semibold hover:underline">{category.type}</Link></li>    
-
-                })}
-                <li onClick={()=>{setCheckMyPost(true)}} className=" text-blue-800 cursor-pointer font-semibold hover:underline">My All Post</li>
+                
+               })}
+            <li onClick={myPostHandler} className=" text-blue-800 cursor-pointer font-semibold hover:underline">My All Post</li>
             </ul>
 
         </div>

@@ -2,6 +2,7 @@ import React, { useState ,useEffect ,useContext } from 'react'
 import { useLocation ,useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from "../../Context/DataProvider";
 import { API } from "../../Service/api"
+import { toast } from 'react-toastify';
 
 const updatePost = () => {
 
@@ -69,6 +70,7 @@ const updateBlogPost = async () =>{
   let response =  await  API.updatePost(post);
    if(response.isSuccess){
      navigate(`/details/${id}`);
+     toast.success("Post Updated")
    }
 }
   return (

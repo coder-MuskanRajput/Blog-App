@@ -2,6 +2,7 @@ import React, { useState ,useEffect ,useContext } from 'react'
 import { useLocation ,useNavigate } from 'react-router-dom';
 import { DataContext } from "../../Context/DataProvider";
 import { API } from "../../Service/api"
+import { toast } from 'react-toastify';
 
 const createPost = () => {
 const initialPost = {
@@ -53,6 +54,7 @@ const savePost = async () =>{
   let response =  await  API.createPost(post);
    if(response.isSuccess){
      navigate("/");
+     toast.success("Post Created")
    }
 }
   return (

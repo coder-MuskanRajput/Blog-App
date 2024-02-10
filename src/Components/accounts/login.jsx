@@ -78,6 +78,7 @@ const Login = ({isUserAuthenticated}) => {
       sessionStorage.setItem("refreshToken", `Bearer ${response.data.refreshToken}`);
 
       setAccount({username : response.data.user , email: response.data.email})
+      
       isUserAuthenticated(true);
       toast.success("Login Account Successfully")
 
@@ -122,8 +123,7 @@ const Login = ({isUserAuthenticated}) => {
       <div className="text-right mt-2">
         <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
       </div>
-      {error && <Error>{error}</Error>}
-
+      
       <button onClick={()=> loginUser()}  type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
             px-4 py-3 mt-6">Log In</button>
     </form>
