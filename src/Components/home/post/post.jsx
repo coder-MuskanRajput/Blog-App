@@ -31,9 +31,9 @@ const post = () => {
     {
 
   posts && posts.length >0 ? posts.map(post =>{
-    const url = post.picture ? post.picture : "https://media.istockphoto.com/id/1371081916/photo/content-wording-on-wooden-cubes-with-speech-bubbles.webp?b=1&s=170667a&w=0&k=20&c=_QWN8OOQbyV2vLi6p1wceOhhRgDvZyhHaEav0CGFw1M="
+    const url = post.picture.url ? post.picture.url : "https://media.istockphoto.com/id/1371081916/photo/content-wording-on-wooden-cubes-with-speech-bubbles.webp?b=1&s=170667a&w=0&k=20&c=_QWN8OOQbyV2vLi6p1wceOhhRgDvZyhHaEav0CGFw1M="
 
-    return <div className="w-full md:w-1/2 lg:w-1/4 mb-4 lg:mb-0 border-2 border-zinc-800">
+    return <div key={post._id} className="w-full md:w-1/2 lg:w-1/4 mb-4 lg:mb-0 border-2 border-zinc-800">
         {
 
         <Link to="#" className="h-72 md:h-96 block group relative overflow-hidden shadow-lg">

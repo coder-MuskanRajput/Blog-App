@@ -8,7 +8,7 @@ const createPost = () => {
 const initialPost = {
   title:"",
   description: "",
-  picture:"",
+  picture:{},
   username:"",
   categories:"",
   createdDate:new Date()
@@ -24,7 +24,8 @@ const navigate  = useNavigate();
 
 // let url2 = post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg"
 
-const [url, setUrl] = useState(post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg")
+const [url, setUrl] = useState(post?.picture.url ? post.picture.url : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg")
+const [fileId, setFileId] = useState('')
 
 useEffect(()=>{
    const getImage = async() =>{
@@ -35,8 +36,10 @@ useEffect(()=>{
 
       //Api call
       const response =  await API.uploadFile(data);
-      post.picture = response.data
-      setUrl(response.data);
+      post.picture.url = response.data.url
+      post.picture.fileId = response.data.fileId
+      setUrl(response.data.url);
+      setFileId(response.data.fileId);
      }
    }
    getImage();
@@ -59,9 +62,9 @@ const savePost = async () =>{
 }
   return (
     <>
-    <div className="bg-green-100 h-screen flex-col items-center">
+    <div className="bg-green-100  flex-col items-center">
 
-    <div className=" w-screen bg-cover  h-[500px] text-center overflow-hidden">
+    <div className=" w- bg-cover  h-[500px] text-center overflow-hidden">
       <img src={url} className='h-[500px] object-cover w-screen bg-center bg-no-repeat'  alt="" />
     </div>
 
@@ -75,7 +78,7 @@ const savePost = async () =>{
             <input type='file' onChange={(e)=>setFile(e.target.files[0])} className="hidden" />
         </label>
      </div>
-
+ 
    <div className="bg-white  p-2 md:w-2/3 lg:w-1/2 mx-auto rounded">
      <form onSubmit={(e) => e.preventDefault() }>
 
@@ -102,4 +105,4 @@ const savePost = async () =>{
   )
 }
 
-export default createPost
+export default createPost ;

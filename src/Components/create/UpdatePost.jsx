@@ -26,7 +26,7 @@ const {id} = useParams();
 
 // let url2 = post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg"
 
-const [url, setUrl] = useState(post.picture ? post.picture : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg")
+const [url, setUrl] = useState(post?.picture?.url ? post.picture.url : "https://st3.depositphotos.com/3268541/16034/v/450/depositphotos_160348548-stock-illustration-blogging-round-colorful-vector-illustration.jpg")
 
 useEffect(() =>{
       const fetchData = async () =>{
@@ -35,8 +35,7 @@ useEffect(() =>{
             setPost(response.data);
 
           //  post.picture = response.data.picture
-           setUrl(response.data.picture);
-
+           setUrl(response.data.picture?.url);
          }
       }
       fetchData();
@@ -51,9 +50,10 @@ useEffect(()=>{
 
       //Api call
       const response =  await API.uploadFile(data);
-      post.picture = response.data
+      post.picture.url = response.data.url
+      post.picture.fileId = response.data.fileId
       setPost({...post , picture : response.data})
-      setUrl(response.data);
+      setUrl(response.data.url);
      }
    }
    getImage();

@@ -17,11 +17,13 @@ const DetailView = () => {
   const [post, setPost] = useState({}); 
   const { id } = useParams(); 
   const {account} = useContext(DataContext); 
-  const [isImageAvailable, setIsImageAvailable] = useState(true) 
+  const [isImageAvailable, setIsImageAvailable] = useState(false) 
   const navigate = useNavigate();
   const [isUserTrue, setIsUserTrue] = useState(false)
+ const [url, setUrl] = useState(post?.picture ? post?.picture?.url  :"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")
 
-  const url = post.picture ? post.picture :"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" 
+ 
+
   useEffect(()=>{ 
        const fetchData = async ()=>{ 
         let response = await API.getPostById(id); 
@@ -29,12 +31,20 @@ const DetailView = () => {
          setPost(response.data); 
           if(account.username === response.data.username){
            setIsUserTrue(true);
+           
             console.log(isUserTrue)
         }
         // console.log(account)
-          if(post.picture == '' && !post.picture){ 
-            setIsImageAvailable(false) 
+        try {
+          setUrl(response.data.picture?.url)
+        
+          if(post?.picture){ 
+            setIsImageAvailable(true) 
           }  
+          
+        } catch (error) {
+          console.log(error);
+        }
         } 
        } 
        fetchData() 
@@ -85,6 +95,7 @@ const DetailView = () => {
     // Create an instance of DeleteButton class when the component mounts 
     const deleteButtonInstance = new DeleteButton(".delBtn"); 
  
+    
     // Cleanup by removing the event listener when the component unmounts 
     return () => { 
       const buttonElement = document.querySelector(".delBtn"); 
@@ -101,6 +112,14 @@ const DetailView = () => {
     }
   console.log("Button clicked!"); 
   }; 
+
+  useEffect(()=>{
+    if(url !== "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" && url){
+          setIsImageAvailable(true)
+        }
+        
+ },[url])
+
  
   return ( 
     <> 
@@ -110,7 +129,7 @@ const DetailView = () => {
   <div className='text-gray-600 text-sm flex items-center justify-between w-full'><span>Author :<span className='font-bold'> {post.username}</span> , { new Date(post.createdDate).toDateString()}</span> <span>Category : {post.categories}</span></div> 
   <span className='text-3xl w-full'>{post.title}</span> 
   <div className='w-full md:w-[80%] h-[45vh] flex flex-col items-center justify-center bg-gray-200 gap-2'> 
-  <img className='min-h-[80%] h-full' src={isImageAvailable ? post.picture:'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' } alt="here is image of post" /> 
+  <img className='min-h-[80%] h-full' src={isImageAvailable ? url:'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' } alt="here is image of post" /> 
   
    <div className={`flex gap-2 ${isUserTrue ? "" : "hidden"}`}> 
   <button onClick={()=>{deleteHandler()}} className={`delBtn bg-red-700`} type="button" aria-label="Delete"> 
