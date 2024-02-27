@@ -6,10 +6,11 @@ import { RiDeleteBinLine } from '@remixicon/react';
 import {API} from "../../../Service/api"
 import { toast } from 'react-toastify';
 
-const Comment = ({comment , setToggle}) => {
+const Comment = ({comment , setToggle , key}) => {
 
   const {account} = useContext(DataContext); 
-  const removeComment = async () =>{
+
+  const removeComment = async () => {
     let response = await API.deleteComment(comment._id);
     if(response.isSuccess){
       setToggle(prevState => !prevState)
@@ -18,10 +19,10 @@ const Comment = ({comment , setToggle}) => {
   }
   return (
     <>
-<div className="container mx-auto my-4 sm:px-20 flex justify-center">
+<div key={key} className="container mx-auto my-4 sm:px-20 flex justify-center">
   <div className="w-full lg:w-6/12 mx-3 md:mx-0 lg:mx-0 border rounded bg-white overflow-hidden">
 
-<div className="mb-2 pb-2">
+<div className="mb-2 p-3">
         <div className="mb-2 text-sm">
           <strong className="mr-2"> {comment.name} </strong>
           <span className="text-gray-400">

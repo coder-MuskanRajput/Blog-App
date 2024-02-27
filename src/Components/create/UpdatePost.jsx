@@ -75,9 +75,9 @@ const updateBlogPost = async () =>{
 }
   return (
     <>
-    <div className="bg-green-100 h-screen flex-col items-center">
+    <div className="bg-green-100 flex-col items-center">
 
-    <div className=" w-screen bg-cover  h-[500px] text-center overflow-hidden">
+    <div className=" w-[100%] bg-cover  h-[500px] text-center overflow-hidden">
       <img src={url}  className='h-[500px] object-cover w-screen bg-center bg-no-repeat'  alt="" />
     </div>
 

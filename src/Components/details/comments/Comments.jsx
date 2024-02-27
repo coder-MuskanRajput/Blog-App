@@ -31,6 +31,7 @@ export const Comments = ({ post }) =>{
          }
          getData();
     },[post , toggle])
+
     const handleChange = (e) =>{
         setComment({...comment ,
              name :account.username,
@@ -38,17 +39,17 @@ export const Comments = ({ post }) =>{
              comments: e.target.value,})
     }
 
-    const addComment =async (e) =>{
+    const addComment = async (e) =>{
       let response = await API.newComment(comment);
       console.log(response);
       if(response.isSuccess){
         setComment(initialValues);
       }
-      setToggle(true)
+      setToggle(prevState => !prevState)
     }
      return(
     <>
-    <div className="flex w-[100%] justify-center items-center">
+    <div  className="flex w-[100%] justify-center items-center">
 
 <div className="w-full md:w-1/2 bg-white p-2 pt-4 rounded shadow-lg">
   <div className="flex ml-3">
